@@ -32,7 +32,7 @@ module.exports = {
       name: "FireEye HX Instance URL",
       description:
         "The URL of the FireEye HX instance you would like to connect to (including http:// or https://)",
-      default: "https://hexjcp623-hx-webui-1.hex01.helix.apps.fireeye.com",
+      default: "",
       type: "text",
       userCanEdit: false,
       adminOnly: true,
