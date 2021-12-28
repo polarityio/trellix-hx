@@ -2,7 +2,7 @@
 
 ![image](https://img.shields.io/badge/status-beta-green.svg)
 
-FireEye Endpoint Security protects your organization with intelligence led protection, detection and response.
+The FireEye Endpoint Security protects your organization with intelligence led protection, detection and response.
 
 Polarity's FireEye HX integration allows querying for alerts and the associated hosts using MD5 Hashes.
 
