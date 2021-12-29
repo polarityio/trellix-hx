@@ -1,0 +1,17 @@
+{
+  "main": "./integration.js",
+  "name": "FireEyeHX",
+  "version": "3.0.0-beta",
+  "private": true,
+  "license": "MIT",
+  "author": "Polarity",
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {
+    "bottleneck": "^2.19.5",
+    "jest": "^27.4.5",
+    "lodash": "^4.17.15",
+    "nock": "^13.2.1"
+  }
+}
