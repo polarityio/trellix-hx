@@ -6,6 +6,8 @@ The FireEye Endpoint Security protects your organization with intelligence led p
 
 Polarity's FireEye HX integration allows querying for alerts and the associated hosts using MD5 Hashes.
 
+<img width="350" alt="Integration Example" src="./assets/alerts.png">
+
 To learn more about FireEye HX, visit the [official website](https://www.fireeye.com/products/endpoint-security.html).
 
 ## FireEye HX Integration Options
