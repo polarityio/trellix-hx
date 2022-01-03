@@ -16,7 +16,6 @@ const emptyResponse = (entity) => [
 ];
 
 const polarityResponse = (entity, response, Logger) => {
-  Logger.trace({ RESPONSE: response });
   const results = _.get(response, "alerts.entries");
 
   return _.get(response, "alerts.entries").length
