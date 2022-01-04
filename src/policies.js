@@ -1,5 +1,6 @@
 const getPolicies = async (requestWithDefaults, options, Logger) => {
   try {
+    
     const policies = await requestWithDefaults({
       method: "GET",
       url: `${options.url}/hx/api/v3/policies`,

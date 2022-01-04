@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 polarity.export = PolarityComponent.extend({
   details: Ember.computed.alias('block.data.details'),
@@ -46,84 +46,15 @@ polarity.export = PolarityComponent.extend({
 
       this.set(`expandableTitleStates`, modifiedExpandableTitleStates);
     },
-    showAgentLogging: function (index) {
-      const policy = this.get('block.data.details.policies.entries.' + index);
+    showPolicyInfo: function (policyName, index) {
+      const policy = this.get(`block.data.details.policies.entries.${index}`);
 
-      const __showAgentLogging = this.get(
-        'block.data.details.policies.entries.' + index + '.__showAgentLogging'
+      const showPolicyInfo = this.get(
+        `block.data.details.policies.entries.${index}.${policyName}`
       );
 
-      if (__showAgentLogging) {
-        Ember.set(policy, '__showAgentLogging', false);
-      } else {
-        Ember.set(policy, '__showAgentLogging', true);
-      }
-    },
-    showProxyInformation: function (index) {
-      const policy = this.get('block.data.details.policies.entries.' + index);
-
-      const __showProxyInformation = this.get(
-        'block.data.details.policies.entries.' + index + '.__showProxyInformation'
-      );
-
-      if (__showProxyInformation) {
-        Ember.set(policy, '__showProxyInformation', false);
-      } else {
-        Ember.set(policy, '__showProxyInformation', true);
-      }
-    },
-    showResourceUse: function (index) {
-      const policy = this.get('block.data.details.policies.entries.' + index);
-
-      const __showResourceUse = this.get(
-        'block.data.details.policies.entries.' + index + '.__showResourceUse'
-      );
-
-      if (__showResourceUse) {
-        Ember.set(policy, '__showResourceUse', false);
-      } else {
-        Ember.set(policy, '__showResourceUse', true);
-      }
-    },
-    showMalwareScans: function (index) {
-      const policy = this.get('block.data.details.policies.entries.' + index);
-
-      const __showMalwareScans = this.get(
-        'block.data.details.policies.entries.' + index + '.__showMalwareScans'
-      );
-
-      if (__showMalwareScans) {
-        Ember.set(policy, '__showMalwareScans', false);
-      } else {
-        Ember.set(policy, '__showMalwareScans', true);
-      }
-    },
-    showServerAddress: function (index) {
-      const policy = this.get('block.data.details.policies.entries.' + index);
-
-      const __showServerAddress = this.get(
-        'block.data.details.policies.entries.' + index + '.__showServerAddress'
-      );
-
-      if (__showServerAddress) {
-        Ember.set(policy, '__showServerAddress', false);
-      } else {
-        Ember.set(policy, '__showServerAddress', true);
-      }
-    },
-    showTamperInformation: function (index) {
-      const policy = this.get('block.data.details.policies.entries.' + index);
-
-      const __showTamperInformation = this.get(
-        'block.data.details.policy.entries.' + index + '.__showTamperInformation'
-      );
-
-      if (__showTamperInformation) {
-        Ember.set(policy, '__showTamperInformation', false);
-      } else {
-        Ember.set(policy, '__showTamperInformation', true);
-      }
+      Ember.set(policy, policyName, !showPolicyInfo);
+      this.get('block').notifyPropertyChange('data');
     }
   }
 });
-

@@ -1,9 +1,9 @@
-"use strict";
-const _ = require("lodash");
-const Bottleneck = require("bottleneck/es5");
+'use strict';
+const _ = require('lodash');
+const Bottleneck = require('bottleneck/es5');
 
-const setRequestDefaults = require("./src/buildRequest");
-const buildResponse = require("./src/buildResponse");
+const setRequestDefaults = require('./src/buildRequest');
+const buildResponse = require('./src/buildResponse');
 
 let limiter = null;
 let Logger;
@@ -19,7 +19,7 @@ const _setupLimiter = (options) => {
     maxConcurrent: Number.parseInt(options.maxConcurrent, 10), // no more than 5 lookups can be running at single time
     highWater: 100, // no more than 100 lookups can be queued up
     strategy: Bottleneck.strategy.OVERFLOW,
-    minTime: Number.parseInt(options.minTime, 10), // don't run lookups faster than 1 every 200 ms
+    minTime: Number.parseInt(options.minTime, 10) // don't run lookups faster than 1 every 200 ms
   });
 };
 
@@ -32,28 +32,28 @@ const doLookup = async (entities, options, callback) => {
       lookupResults = await limiter.schedule(() =>
         buildResponse(entity, requestWithDefaults, options, Logger)
       );
-
-      Logger.trace({ lookupResults }, "Lookup Results");
-      return callback(null, lookupResults);
     }
+
+    Logger.trace({ lookupResults }, 'Lookup Results');
+    return callback(null, lookupResults); // moved out of for-loop
   } catch (err) {
-    Logger.trace({ err }, "Lookup Error");
+    Logger.trace({ err }, 'Lookup Error');
     return callback(err);
   }
 };
 
 const onMessage = (payload, options, callback) => {
   switch (payload.action) {
-    case "RETRY_LOOKUP":
+    case 'RETRY_LOOKUP':
       doLookup([payload.entity], options, (err, lookupResults) => {
         if (err) {
-          Logger.error({ err }, "Error retrying lookup");
+          Logger.error({ err }, 'Error retrying lookup');
           callback(err);
         } else {
           callback(
             null,
             lookupResults && lookupResults[0] && lookupResults[0].data === null
-              ? { data: { summary: ["No Results Found on Retry"] } }
+              ? { data: { summary: ['No Results Found on Retry'] } }
               : lookupResults[0]
           );
         }
@@ -63,14 +63,10 @@ const onMessage = (payload, options, callback) => {
 };
 
 const validateOption = (errors, options, optionName, errMessage) => {
-  if (
-    !(
-      typeof options[optionName].value === "string" && options[optionName].value
-    )
-  ) {
+  if (!(typeof options[optionName].value === 'string' && options[optionName].value)) {
     errors.push({
       key: optionName,
-      message: errMessage,
+      message: errMessage
     });
   }
 };
@@ -78,25 +74,20 @@ const validateOption = (errors, options, optionName, errMessage) => {
 const validateOptions = (options, callback) => {
   let errors = [];
 
-  validateOption(errors, options, "url", "You must provide an api url.");
-  validateOption(
-    errors,
-    options,
-    "apiToken",
-    "You must provide a valid access key."
-  );
+  validateOption(errors, options, 'url', 'You must provide an api url.');
+  validateOption(errors, options, 'apiToken', 'You must provide a valid access key.');
 
   if (options.maxConcurrent.value < 1) {
     errors = errors.concat({
-      key: "maxConcurrent",
-      message: "Max Concurrent Requests must be 1 or higher",
+      key: 'maxConcurrent',
+      message: 'Max Concurrent Requests must be 1 or higher'
     });
   }
 
   if (options.minTime.value < 1) {
     errors = errors.concat({
-      key: "minTime",
-      message: "Minimum Time Between Lookups must be 1 or higher",
+      key: 'minTime',
+      message: 'Minimum Time Between Lookups must be 1 or higher'
     });
   }
   callback(null, errors);
@@ -106,6 +97,5 @@ module.exports = {
   startup,
   doLookup,
   onMessage,
-  validateOptions,
+  validateOptions
 };
-
