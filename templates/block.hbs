@@ -27,8 +27,7 @@
     <li class="nav-item">
       <a
         {{action "changeTab" "alerts"}}
-        class="nav-link
-          {{if (or (eq activeTab "alerts") (not activeTab)) "active"}}"
+        class="nav-link {{if (or (eq activeTab "alerts") (not activeTab)) "active"}}"
         href="#"
       >
         Alerts
@@ -37,8 +36,7 @@
     <li class="nav-item">
       <a
         {{action "changeTab" "policies"}}
-        class="nav-link
-          {{if (or (eq activeTab "policies") (not activeTab)) "active"}}"
+        class="nav-link {{if (or (eq activeTab "policies") (not activeTab)) "active"}}"
         href="#"
       >
         Policies
@@ -46,347 +44,381 @@
     </li>
   </ul>
   {{#if details}}
-    {{#each alerts as |alert index|}}
-      {{#if (gt index 0)}}
-        <hr />
-      {{/if}}
+    {{#if (eq activeTab "alerts")}}
+      {{#if alerts.length}}
+        {{#each alerts as |alert index|}}
+          {{#if (gt index 0)}}
+            <hr />
+          {{/if}}
 
-      {{#if (eq activeTab "alerts")}}
+          <div>
+            <h1 class="p-title">
+              {{fa-icon "search" fixedWidth=true}}
+              Alert Information:
+            </h1>
+          </div>
+
+          {{#if alert.indicator}}
+            <div class="alert-information">
+              {{#if alert.indicator.name}}
+                <div>
+                  <span class="p-key">Name:</span>
+                  <span class="p-value">{{alert.indicator.name}}</span>
+                </div>
+              {{/if}}
+              {{#if alert.indicator.uri_name}}
+                <div>
+                  <span class="p-key">URL Name:</span>
+                  <span class="p-value">{{alert.indicator.uri_name}}</span>
+                </div>
+              {{/if}}
+              {{#if alert.indicator.display_name}}
+                <div>
+                  <span class="p-key">Display Name:</span>
+                  <span class="p-value">{{alert.indicator.display_name}}</span>
+                </div>
+              {{/if}}
+              {{#if alert.indicator.signature}}
+                <div>
+                  <span class="p-key">Signature:</span>
+                  <span class="p-value">{{alert.indicator.signature}}</span>
+                </div>
+              {{/if}}
+              {{#if alert.indicator.category}}
+                <div>
+                  <span class="p-key">Category:</span>
+                  <span class="p-value">{{alert.indicator.category}}</span>
+                </div>
+              {{/if}}
+            </div>
+          {{/if}}
+
+          {{#if (get expandableTitleStates index)}}
+            <a
+              href="#"
+              class="expandable-title"
+              {{on "click" (action "toggleExpandableTitle" index)}}
+            >
+              <span class="text"><span class="desc">Associated Hosts:</span>
+                {{UNIQUE_VALUE}}</span>
+              {{fa-icon "angle-up"}}
+            </a>
+
+            {{#each hostWithAlert as |hostAlert|}}
+              <div class="mt-1">
+                <a
+                  class="p-link"
+                  href="https://hexjcp623-hx-webui-1.hex01.helix.apps.fireeye.com/hx/#/hosts/{{hostAlert._id}}"
+                >View Host In FireEye
+                  {{fa-icon icon="external-link-square" class="external-link-icon"}}</a>
+              </div>
+
+              <div class="host-stats">
+                {{#if hostAlert.hostname}}
+                  <div>
+                    <span class="p-key">Hostname:</span>
+                    <span class="p-value">{{hostAlert.hostname}}</span>
+                  </div>
+                {{/if}}
+                {{#if hostAlert.domain}}
+                  <div>
+                    <span class="p-key">Domain:</span>
+                    <span class="p-value">{{hostAlert.domain}}</span>
+                  </div>
+                {{/if}}
+                {{#if hostAlert.primary_ip_address}}
+                  <div>
+                    <span class="p-key">IP Address:</span>
+                    <span class="p-value">{{hostAlert.primary_ip_address}}</span>
+                  </div>
+                {{/if}}
+                {{#if hostAlert.last_audit_timestamp}}
+                  <div>
+                    <span class="p-key">Last Audit:</span>
+                    <span class="p-value">{{hostAlert.last_audit_timestamp}}</span>
+                  </div>
+                {{/if}}
+                {{#if hostAlert.last_poll_timestamp}}
+                  <div>
+                    <span class="p-key">Last Poll:</span>
+                    <span class="p-value">{{hostAlert.last_poll_timestamp}}</span>
+                  </div>
+                {{/if}}
+                {{#if hostAlert.last_poll_ip}}
+                  <div>
+                    <span class="p-key">Last Poll IP:</span>
+                    <span class="p-value">{{hostAlert.last_poll_ip}}</span>
+                  </div>
+                {{/if}}
+              </div>
+            {{/each}}
+          {{else}}
+            <a
+              href="#"
+              class="expandable-title"
+              {{on "click" (action "toggleExpandableTitle" index)}}
+            >
+              <span class="text">Associated Hosts</span>
+              {{fa-icon "angle-down"}}
+            </a>
+          {{/if}}
+        {{/each}}
+      {{else}}
+        No Alerts Found
+      {{/if}}
+    {{/if}}
+    {{#if (eq activeTab "policies")}}
+      {{#if policies.length}}
         <div>
           <h1 class="p-title">
             {{fa-icon "search" fixedWidth=true}}
-            Alert Information:
+            Policy Information:
           </h1>
         </div>
 
-        <div class="alert-information">
-          <div>
-            <span class="p-key">Name:</span>
-            <span class="p-value">{{alert.indicator.name}}</span>
-          </div>
-          <div>
-            <span class="p-key">URL Name:</span>
-            <span class="p-value">{{alert.indicator.uri_name}}</span>
-          </div>
-          <div>
-            <span class="p-key">Display Name:</span>
-            <span class="p-value">{{alert.indicator.display_name}}</span>
-          </div>
-          <div>
-            <span class="p-key">Signature:</span>
-            <span class="p-value">{{alert.indicator.signature}}</span>
-          </div>
-          <div>
-            <span class="p-key">Category:</span>
-            <span class="p-value">{{alert.indicator.category}}</span>
-          </div>
+        <div class="mt-1">
+          <a
+            class="p-link"
+            href="{{block.userOptions.url}}/hx/#/admin-policies"
+          >View Policies in FireEye
+            {{fa-icon icon="external-link-square" class="external-link-icon"}}</a>
         </div>
 
-        {{#if (get expandableTitleStates index)}}
-          {{! alerts's stats }}
-          <a
-            href="#"
-            class="expandable-title"
-            {{on "click" (action "toggleExpandableTitle" index)}}
-          >
-            <span class="text"><span class="desc">Associated Hosts:</span>
-              {{UNIQUE_VALUE}}</span>
-            {{fa-icon "angle-up"}}
-          </a>
-
-          {{#each hostWithAlert as |hostAlert|}}
-            <div class="mt-1">
-              <a
-                class="p-link"
-                href="https://hexjcp623-hx-webui-1.hex01.helix.apps.fireeye.com/hx/#/hosts"
-              >View Host In FireEye
-                {{fa-icon
-                  icon="external-link-square"
-                  class="external-link-icon"
-                }}</a>
-            </div>
-
-            <div class="host-stats">
+        {{#each policies as |policy index|}}
+          <div class="alert-information">
+            {{#if policy.name}}
               <div>
-                <span class="p-key">Hostname:</span>
-                <span class="p-value">{{hostAlert.hostname}}</span>
-              </div>
-              <div>
-                <span class="p-key">Domain:</span>
-                <span class="p-value">{{hostAlert.domain}}</span>
-              </div>
-              <div>
-                <span class="p-key">IP Address:</span>
-                <span class="p-value">{{hostAlert.primary_ip_address}}</span>
-              </div>
-              <div>
-                <span class="p-key">Last Audit:</span>
-                <span class="p-value">{{hostAlert.last_audit_timestamp}}</span>
-              </div>
-              <div>
-                <span class="p-key">Last Poll:</span>
-                <span class="p-value">{{hostAlert.last_poll_timestamp}}</span>
-              </div>
-              <div>
-                <span class="p-key">Last Poll IP:</span>
-                <span class="p-value">{{hostAlert.last_poll_ip}}</span>
-              </div>
-            </div>
-          {{/each}}
-        {{else}}
-          <a
-            href="#"
-            class="expandable-title"
-            {{on "click" (action "toggleExpandableTitle" index)}}
-          >
-            <span class="text">Get Hosts With Alerts</span>
-            {{fa-icon "angle-down"}}
-          </a>
-        {{/if}}
-      {{/if}}
-    {{/each}}
-    {{#if (eq activeTab "policies")}}
-      <div>
-        <h1 class="p-title">
-          {{fa-icon "search" fixedWidth=true}}
-          Policy Information:
-        </h1>
-      </div>
-
-      <div class="mt-1">
-        <a
-          class="p-link"
-          href="https://hexjcp623-hx-webui-1.hex01.helix.apps.fireeye.com/hx/#/admin-policies"
-        >View Policies in FireEye
-          {{fa-icon icon="external-link-square" class="external-link-icon"}}</a>
-      </div>
-
-      {{#each policies as |policy index|}}
-        <div class="alert-information">
-
-          <div>
-            <span class="p-key">Name:</span>
-            <span class="p-value">{{policy.name}}</span>
-          </div>
-          <div>
-            <span class="p-key">Description:</span>
-            <span class="p-value">{{policy.description}}</span>
-          </div>
-          <div>
-            <span class="p-key">Policy Type:</span>
-            <span class="p-value">{{policy.policy_type_id}}</span>
-          </div>
-          <div>
-            <span class="p-key">Created By:</span>
-            <span class="p-value">{{policy.created_by}}</span>
-          </div>
-          <div>
-            <span class="p-key">Created At:</span>
-            <span class="p-value">{{moment-format
-                policy.created_at
-                "MM/DD/YYYY"
-              }}</span>
-          </div>
-          <div>
-            <span class="p-key">Updated At:</span>
-            <span class="p-value">{{moment-format
-                policy.updated_at
-                "MM/DD/YYYY"
-              }}</span>
-          </div>
-
-          {{! agent logging information }}
-          {{#if policy.categories.agentLogging}}
-            <div class="p-title">
-              Agent Information
-              <span class="p-action" {{action "showAgentLogging" index}}>
-                {{#if policy.__showAgentLogging}}
-                  &nbsp;(view compact
-                  {{fa-icon "caret-down"}})
-                {{else}}
-                  &nbsp;(view all
-                  {{fa-icon "caret-up"}})
-                {{/if}}
-              </span>
-            </div>
-            {{#if policy.__showAgentLogging}}
-              <div class="proxy-info">
-                <div>
-                  <span class="p-key">Agent Logging Enabled:</span>
-                  <span
-                    class="p-value"
-                  >{{policy.categories.agentLogging.enabled}}</span>
-                </div>
+                <span class="p-key">Name:</span>
+                <span class="p-value">{{policy.name}}</span>
               </div>
             {{/if}}
-          {{/if}}
-
-          {{! proxy information }}
-          {{#if policy.categories.proxy}}
-            <div class="p-title">
-              Proxy Information
-              <span class="p-action" {{action "showProxyInformation" index}}>
-                {{#if policy.__showProxyInformation}}
-                  &nbsp;(view compact
-                  {{fa-icon "caret-down"}})
-                {{else}}
-                  &nbsp;(view all
-                  {{fa-icon "caret-up"}})
-                {{/if}}
-              </span>
-            </div>
-            {{#if policy.__showProxyInformation}}
-              <div class="proxy-info">
-                <div>
-                  <span class="p-key">Proxy Host:</span>
-                  <span class="p-value">{{policy.categories.proxy.host}}</span>
-                </div>
-                <div>
-                  <span class="p-key">Proxy Port:</span>
-                  <span class="p-value">{{policy.categories.proxy.port}}</span>
-                </div>
-                <div>
-                  <span class="p-key">Proxy Type:</span>
-                  <span class="p-value">{{policy.categories.proxy.type}}</span>
-                </div>
-                <div>
-                  <span class="p-key">Enabled:</span>
-                  <span
-                    class="p-value"
-                  >{{policy.categories.proxy.enabled}}</span>
-                </div>
-                <div>
-                  <span class="p-key">Username:</span>
-                  <span
-                    class="p-value"
-                  >{{policy.categories.proxy.username}}</span>
-                </div>
+            {{#if policy.description}}
+              <div>
+                <span class="p-key">Description:</span>
+                <span class="p-value">{{policy.description}}</span>
               </div>
             {{/if}}
-          {{/if}}
-
-          {{! Resource Use  }}
-          {{#if policy.categories.resource_use}}
-            <div class="p-title">
-              Resource Use Information
-              <span class="p-action" {{action "showResourceUse" index}}>
-                {{#if policy.__showResourceUse}}
-                  &nbsp;(view compact
-                  {{fa-icon "caret-down"}})
-                {{else}}
-                  &nbsp;(view all
-                  {{fa-icon "caret-up"}})
-                {{/if}}
-              </span>
-            </div>
-            {{#if policy.__showResourceUse}}
-              <div class="resource-use-info">
-                <div>
-                  <span class="p-key">Priority:</span>
-                  <span
-                    class="p-value"
-                  >{{policy.categories.resource_use.priority}}</span>
-                </div>
-                <div>
-                  <span class="p-key">Storage Mode:</span>
-                  <span
-                    class="p-value"
-                  >{{policy.categories.resource_use.storage_mode}}</span>
-                </div>
-                <div>
-                  <span class="p-key">CPU Limit:</span>
-                  <span
-                    class="p-value"
-                  >{{policy.categories.resource_use.cpu_limit}}</span>
-                </div>
+            {{#if policy.policy_type_id}}
+              <div>
+                <span class="p-key">Policy Type:</span>
+                <span class="p-value">{{policy.policy_type_id}}</span>
               </div>
             {{/if}}
-          {{/if}}
-
-          {{! Malware Scans }}
-          {{#if policy.categories.malware_scans}}
-            <div class="p-title">
-              Malware Scans
-              <span class="p-action" {{action "showMalwareScans" index}}>
-                {{#if policy.__showMalwareScans}}
-                  &nbsp;(view compact
-                  {{fa-icon "caret-down"}})
-                {{else}}
-                  &nbsp;(view all
-                  {{fa-icon "caret-up"}})
-                {{/if}}
-              </span>
-            </div>
-            {{#if policy.__showMalwareScans}}
-              <div class="malware-scan-info">
-                <div>
-                  <span class="p-key">Malware Scan Enabled:</span>
-                  <span
-                    class="p-value"
-                  >{{policy.categories.malware_scans.enable}}</span>
-                </div>
-                <div>
-                  <span class="p-key">White List Enabled:</span>
-                  <span
-                    class="p-value"
-                  >{{policy.categories.malware_scans.enable_white_list}}</span>
-                </div>
+            {{#if policy.created_by}}
+              <div>
+                <span class="p-key">Created By:</span>
+                <span class="p-value">{{policy.created_by}}</span>
               </div>
             {{/if}}
-          {{/if}}
+            {{#if policy.created_at}}
+              <div>
+                <span class="p-key">Created At:</span>
+                <span class="p-value">{{moment-format policy.created_at "MM/DD/YYYY" timezone=timezone}}</span>
+              </div>
+            {{/if}}
+            {{#if policy.updated_at}}
+              <div>
+                <span class="p-key">Updated At:</span>
+                <span class="p-value">{{moment-format policy.updated_at "MM/DD/YYYY" timezone=timezone}}</span>
+              </div>
+            {{/if}}
 
-          {{! Server Address }}
-          {{#if policy.categories.server_address}}
-            <div class="p-title">
-              Server Information
-              <span class="p-action" {{action "showServerAddress" index}}>
-                {{#if policy.__showServerAddress}}
-                  &nbsp;(view compact
-                  {{fa-icon "caret-down"}})
-                {{else}}
-                  &nbsp;(view all
-                  {{fa-icon "caret-up"}})
-                {{/if}}
-              </span>
-            </div>
-            {{#if policy.__showServerAddress}}
-              <div class="malware-scan-info">
-                {{#each policy.categories.server_address.servers as |server|}}
+            {{#if policy.categories.agentLogging}}
+              <div class="p-title">
+                Agent Information
+                <span class="p-action" {{action "showAgentLogging" index}}>
+                  {{#if policy.__showAgentLogging}}
+                    &nbsp;(view compact
+                    {{fa-icon "caret-down"}})
+                  {{else}}
+                    &nbsp;(view all
+                    {{fa-icon "caret-up"}})
+                  {{/if}}
+                </span>
+              </div>
+              {{#if policy.__showAgentLogging}}
+                <div class="proxy-info">
                   <div>
-                    <span class="p-key">Host Name:</span>
-                    <span class="p-value">{{server.hostname}}</span>
+                    <span class="p-key">Agent Logging Enabled:</span>
+                    <span class="p-value">{{policy.categories.agentLogging.enabled}}</span>
                   </div>
-                {{/each}}
-              </div>
+                </div>
+              {{/if}}
             {{/if}}
-          {{/if}}
 
-          {{! Tamper Protection }}
-          {{#if policy.categories.tamper_protection}}
-            <div class="p-title">
-              Tamper Protection
-              <span class="p-action" {{action "showTamperInformation" index}}>
-                {{#if policy.__showTamperInformation}}
-                  &nbsp;(view compact
-                  {{fa-icon "caret-down"}})
-                {{else}}
-                  &nbsp;(view all
-                  {{fa-icon "caret-up"}})
-                {{/if}}
-              </span>
-            </div>
-            {{#if policy.__showTamperInformation}}
-              <div>
-                <span class="p-key">Tamper Protection Enabled:</span>
-                <span
-                  class="p-value"
-                >{{policy.categories.tamper_protection.enabled}}</span>
+            {{! proxy information }}
+            {{#if policy.categories.proxy}}
+              <div class="p-title">
+                Proxy Information
+                <span class="p-action" {{action "showProxyInformation" index}}>
+                  {{#if policy.__showProxyInformation}}
+                    &nbsp;(view compact
+                    {{fa-icon "caret-down"}})
+                  {{else}}
+                    &nbsp;(view all
+                    {{fa-icon "caret-up"}})
+                  {{/if}}
+                </span>
               </div>
+              {{#if (and policy.__showProxyInformation policy.categories.proxy)}}
+                <div class="proxy-info">
+                  {{#if policy.categories.proxy.host}}
+                    <div>
+                      <span class="p-key">Proxy Host:</span>
+                      <span class="p-value">{{policy.categories.proxy.host}}</span>
+                    </div>
+                  {{/if}}
+                  {{#if policy.categories.proxy.port}}
+                    <div>
+                      <span class="p-key">Proxy Port:</span>
+                      <span class="p-value">{{policy.categories.proxy.port}}</span>
+                    </div>
+                  {{/if}}
+                  {{#if policy.categories.proxy.type}}
+                    <div>
+                      <span class="p-key">Proxy Type:</span>
+                      <span class="p-value">{{policy.categories.proxy.type}}</span>
+                    </div>
+                  {{/if}}
+                  {{#if policy.categories.proxy.enabled}}
+                    <div>
+                      <span class="p-key">Enabled:</span>
+                      <span class="p-value">{{policy.categories.proxy.enabled}}</span>
+                    </div>
+                  {{/if}}
+                  {{#if policy.categories.proxy.username}}
+                    <div>
+                      <span class="p-key">Username:</span>
+                      <span class="p-value">{{policy.categories.proxy.username}}</span>
+                    </div>
+                  {{/if}}
+                </div>
+              {{/if}}
             {{/if}}
-          {{/if}}
 
-        </div>
-      {{/each}}
+            {{! Resource Use  }}
+            {{#if policy.categories.resource_use}}
+              <div class="p-title">
+                Resource Use Information
+                <span class="p-action" {{action "showResourceUse" index}}>
+                  {{#if policy.__showResourceUse}}
+                    &nbsp;(view compact
+                    {{fa-icon "caret-down"}})
+                  {{else}}
+                    &nbsp;(view all
+                    {{fa-icon "caret-up"}})
+                  {{/if}}
+                </span>
+              </div>
+              {{#if (and policy.__showResourceUse policy.categories.resource_use)}}
+                <div class="resource-use-info">
+                  {{#if policy.categories.resource_use.priority}}
+                    <div>
+                      <span class="p-key">Priority:</span>
+                      <span class="p-value">{{policy.categories.resource_use.priority}}</span>
+                    </div>
+                  {{/if}}
+                  {{#if policy.categories.resource_use.storage_mode}}
+                    <div>
+                      <span class="p-key">Storage Mode:</span>
+                      <span class="p-value">{{policy.categories.resource_use.storage_mode}}</span>
+                    </div>
+                  {{/if}}
+                  {{#if policy.categories.resource_use.cpu_limit}}
+                    <div>
+                      <span class="p-key">CPU Limit:</span>
+                      <span class="p-value">{{policy.categories.resource_use.cpu_limit}}</span>
+                    </div>
+                  {{/if}}
+                </div>
+              {{/if}}
+            {{/if}}
+
+            {{! Malware Scans }}
+            {{#if policy.categories.malware_scans}}
+              <div class="p-title">
+                Malware Scans
+                <span class="p-action" {{action "showMalwareScans" index}}>
+                  {{#if policy.__showMalwareScans}}
+                    &nbsp;(view compact
+                    {{fa-icon "caret-down"}})
+                  {{else}}
+                    &nbsp;(view all
+                    {{fa-icon "caret-up"}})
+                  {{/if}}
+                </span>
+              </div>
+              {{#if policy.__showMalwareScans}}
+                <div class="malware-scan-info">
+                  <div>
+                    <span class="p-key">Malware Scan Enabled:</span>
+                    <span class="p-value">{{policy.categories.malware_scans.enable}}</span>
+                  </div>
+                  <div>
+                    <span class="p-key">White List Enabled:</span>
+                    <span
+                      class="p-value"
+                    >{{policy.categories.malware_scans.enable_white_list}}</span>
+                  </div>
+                </div>
+              {{/if}}
+            {{/if}}
+
+            {{! Server Address }}
+            {{#if policy.categories.server_address}}
+              <div class="p-title">
+                Server Information
+                <span class="p-action" {{action "showServerAddress" index}}>
+                  {{#if policy.__showServerAddress}}
+                    &nbsp;(view compact
+                    {{fa-icon "caret-down"}})
+                  {{else}}
+                    &nbsp;(view all
+                    {{fa-icon "caret-up"}})
+                  {{/if}}
+                </span>
+              </div>
+              {{#if policy.__showServerAddress}}
+                <div class="malware-scan-info">
+                  {{#each policy.categories.server_address.servers as |server|}}
+                    <div>
+                      <span class="p-key">Host Name:</span>
+                      <span class="p-value">{{server.hostname}}</span>
+                    </div>
+                  {{/each}}
+                </div>
+              {{/if}}
+            {{/if}}
+
+            {{! Tamper Protection }}
+            {{#if policy.categories.tamper_protection}}
+              <div class="p-title">
+                Tamper Protection
+                <span class="p-action" {{action "showTamperInformation" index}}>
+                  {{#if policy.__showTamperInformation}}
+                    &nbsp;(view compact
+                    {{fa-icon "caret-down"}})
+                  {{else}}
+                    &nbsp;(view all
+                    {{fa-icon "caret-up"}})
+                  {{/if}}
+                </span>
+              </div>
+              {{#if policy.__showTamperInformation}}
+                <div>
+                  <span class="p-key">Tamper Protection Enabled:</span>
+                  <span
+                    class="p-value"
+                  >{{policy.categories.tamper_protection.enabled}}</span>
+                </div>
+              {{/if}}
+            {{/if}}
+
+          </div>
+        {{/each}}
+      {{else}}
+        No Policies Found
+      {{/if}}
     {{/if}}
   {{/if}}
 {{/if}}

@@ -1,70 +1,69 @@
 module.exports = {
-  name: "FireEye HX",
-  acronym: "FIREHX",
-  description: `
-  FireEye Endpoint Security protects your organization with intelligence led protection, detection and response.
+  name: 'FireEye HX',
+  acronym: 'FIREHX',
+  description: `FireEye Endpoint Security protects your organization with intelligence led protection, detection and response.
   Polarity's FireEye HX integration allows querying for alerts and the associated hosts using MD5 Hashes.`,
-  entityTypes: ["hash"],
-  defaultColor: "light-purple",
-  styles: ["./styles/styles.less"],
+  entityTypes: ['hash'],
+  defaultColor: 'light-purple',
+  styles: ['./styles/styles.less'],
   block: {
     component: {
-      file: "./components/block.js",
+      file: './components/block.js'
     },
     template: {
-      file: "./templates/block.hbs",
-    },
+      file: './templates/block.hbs'
+    }
   },
   request: {
-    cert: "",
-    key: "",
-    passphrase: "",
-    ca: "",
-    proxy: "",
-    rejectUnauthorized: true,
+    cert: '',
+    key: '',
+    passphrase: '',
+    ca: '',
+    proxy: '',
+    rejectUnauthorized: true
   },
   logging: {
-    level: "info", //trace, debug, info, warn, error, fatal
+    level: 'info' //trace, debug, info, warn, error, fatal
   },
   options: [
     {
-      key: "url",
-      name: "FireEye HX Instance URL",
+      key: 'url',
+      name: 'FireEye HX Instance URL',
       description:
-        "The URL of the FireEye HX instance you would like to connect to (including http:// or https://)",
-      default: "",
-      type: "text",
+        'The URL of the FireEye HX instance you would like to connect to (including http:// or https://)',
+      default: '',
+      type: 'text',
       userCanEdit: false,
-      adminOnly: true,
+      adminOnly: true
     },
     {
-      key: "apiToken",
-      name: "FireEye HX API Token",
-      description: "The API Token associated with the FireEye HX account.",
-      default: "",
-      type: "password",
+      key: 'apiToken',
+      name: 'FireEye HX API Token',
+      description: 'The API Token associated with the FireEye HX account.',
+      default: '',
+      type: 'password',
       userCanEdit: false,
-      adminOnly: true,
+      adminOnly: true
     },
     {
-      key: "maxConcurrent",
-      name: "Max Concurrent Requests",
+      key: 'maxConcurrent',
+      name: 'Max Concurrent Requests',
       description:
-        "Maximum number of concurrent requests.  Integration must be restarted after changing this option. Defaults to 20.",
+        'Maximum number of concurrent requests.  Integration must be restarted after changing this option. Defaults to 20.',
       default: 20,
-      type: "number",
+      type: 'number',
       userCanEdit: false,
-      adminOnly: true,
+      adminOnly: true
     },
     {
-      key: "minTime",
-      name: "Minimum Time Between Lookups",
+      key: 'minTime',
+      name: 'Minimum Time Between Lookups',
       description:
-        "Minimum amount of time in milliseconds between lookups. Integration must be restarted after changing this option. Defaults to 100.",
+        'Minimum amount of time in milliseconds between lookups. Integration must be restarted after changing this option. Defaults to 100.',
       default: 100,
-      type: "number",
+      type: 'number',
       userCanEdit: false,
-      adminOnly: true,
-    },
-  ],
+      adminOnly: true
+    }
+  ]
 };
