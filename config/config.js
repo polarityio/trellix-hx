@@ -1,8 +1,8 @@
 module.exports = {
   name: 'FireEye HX',
   acronym: 'FIREHX',
-  description: `FireEye Endpoint Security protects your organization with intelligence led protection, detection and response.
-  Polarity's FireEye HX integration allows querying for alerts and the associated hosts using MD5 Hashes.`,
+  description:
+    "Polarity's FireEye HX integration allows querying for Alerts, Associated Hosts, and Policy data using Hashes.",
   entityTypes: ['hash'],
   defaultColor: 'light-purple',
   styles: ['./styles/styles.less'],
