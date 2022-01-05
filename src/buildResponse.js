@@ -13,7 +13,6 @@ const getApiData = async (entity, requestWithDefaults, options, Logger) => {
 
   try {
     const alerts = await getAlerts(entity, requestWithDefaults, options, Logger);
-
     const alertsData = _.get(alerts, 'body.data');
 
     // only make request for associated hosts and polices if an alert is found
@@ -35,7 +34,6 @@ const getApiData = async (entity, requestWithDefaults, options, Logger) => {
       hostsWithAlerts,
       policies
     };
-    
     return apiData;
   } catch (err) {
     Logger.error({ err }, 'Error getting API data');

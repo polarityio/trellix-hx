@@ -1,6 +1,7 @@
 'use strict';
 const _ = require('lodash');
 const Bottleneck = require('bottleneck/es5');
+const { map } = require('lodash/fp');
 
 const setRequestDefaults = require('./src/buildRequest');
 const buildResponse = require('./src/buildResponse');
@@ -24,18 +25,20 @@ const _setupLimiter = (options) => {
 };
 
 const doLookup = async (entities, options, callback) => {
-  let lookupResults;
   if (!limiter) _setupLimiter(options);
 
+  const buildRes = limiter.wrap(buildResponse);
+
   try {
-    for (const entity of entities) {
-      lookupResults = await limiter.schedule(() =>
-        buildResponse(entity, requestWithDefaults, options, Logger)
-      );
-    }
+    const lookupResults = await Promise.all(
+      map(
+        async (entity) => await buildRes(entity, requestWithDefaults, options, Logger),
+        entities
+      )
+    );
 
     Logger.trace({ lookupResults }, 'Lookup Results');
-    return callback(null, lookupResults); // moved out of for-loop
+    return callback(null, lookupResults);
   } catch (err) {
     Logger.trace({ err }, 'Lookup Error');
     return callback(err);

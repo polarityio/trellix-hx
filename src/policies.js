@@ -1,19 +1,18 @@
 const getPolicies = async (requestWithDefaults, options, Logger) => {
   try {
-    
     const policies = await requestWithDefaults({
-      method: "GET",
+      method: 'GET',
       url: `${options.url}/hx/api/v3/policies`,
       headers: {
-        Authorization: "Basic " + options.apiToken,
+        Authorization: 'Basic ' + options.apiToken
       },
-      json: true,
+      json: true
     });
 
-    Logger.trace({ policies }, "Policy Data");
+    Logger.trace({ policies }, 'Policy Data');
     return policies.body.data;
   } catch (err) {
-    Logger.trace({ err }, "Error getting policies");
+    Logger.trace({ err }, 'Error getting policies');
     throw err;
   }
 };

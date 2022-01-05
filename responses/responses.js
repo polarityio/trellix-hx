@@ -1,50 +1,43 @@
-const _ = require("lodash");
+const _ = require('lodash');
 
 const polarityError = (err) => {
   const errorMsg = err.message;
   return {
-    detail: errorMsg ? errorMsg : "Unknown Error",
-    error: err,
+    detail: errorMsg ? errorMsg : 'Unknown Error',
+    error: err
   };
 };
 
 const emptyResponse = (entity) => [
   {
     entity,
-    data: null,
-  },
+    data: null
+  }
 ];
 
 const polarityResponse = (entity, response, Logger) => {
-  const results = _.get(response, "alerts.entries");
-
-  return _.get(response, "alerts.entries").length
-    ? [
-        {
-          entity,
-          data: results
-            ? { summary: getSummary(response), details: response }
-            : null,
-        },
-      ]
+  const results = _.get(response, 'alerts.entries');
+  return _.get(response, 'alerts.entries').length
+    ? {
+        entity,
+        data: results ? { summary: getSummary(response), details: response } : null
+      }
     : emptyResponse(entity);
 };
 
 const retryablePolarityResponse = (entity) => {
-  return [
-    {
-      entity,
-      isVolatile: true,
-      data: {
-        summary: ["Lookup limit reached"],
-        details: {
-          summaryTag: "Lookup limit reached",
-          errorMessage:
-            'A temporary FireEye HX API search limit was reached. You can retry your search by pressing the "Retry Search" button.',
-        },
-      },
-    },
-  ];
+  return {
+    entity,
+    isVolatile: true,
+    data: {
+      summary: ['Lookup limit reached'],
+      details: {
+        summaryTag: 'Lookup limit reached',
+        errorMessage:
+          'A temporary FireEye HX API search limit was reached. You can retry your search by pressing the "Retry Search" button.'
+      }
+    }
+  };
 };
 
 const getSummary = (response) => {
@@ -62,5 +55,5 @@ module.exports = {
   polarityError,
   emptyResponse,
   polarityResponse,
-  retryablePolarityResponse,
+  retryablePolarityResponse
 };
