@@ -34,6 +34,7 @@ const getApiData = async (entity, requestWithDefaults, options, Logger) => {
       hostsWithAlerts,
       policies
     };
+    
     return apiData;
   } catch (err) {
     Logger.error({ err }, 'Error getting API data');
