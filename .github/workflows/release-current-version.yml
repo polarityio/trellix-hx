@@ -53,11 +53,9 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: ${{ steps.package-version.outputs.current-version }}
-        files: | 
-          *.js
-          *.json
-          .gitignore
-          LICENSE
-          README.md
-          .prettierrc
+        files: ../${{ github.event.repository.name }}-${{ steps.package-version.outputs.current-version}}.tgz
+        upload_url: ${{ steps.create_versioned_release.outputs.upload_url }} 
+        asset_path: ../${{ github.event.repository.name }}-${{ steps.package-version.outputs.current-version}}.tgz
+        asset_name: ${{ github.event.repository.name }}-${{ steps.package-version.outputs.current-version}}.tgz
+        asset_content_type: application/gzip
   
