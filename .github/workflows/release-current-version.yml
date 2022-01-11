@@ -36,23 +36,28 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Create Versioned Release
       id: create_versioned_release
-      uses: actions/create-release@v1
+      uses: softprops/action-gh-release@v0.1.14
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ steps.package-version.outputs.current-version}}
-        release_name: ${{ steps.package-version.outputs.current-version}}
+        tag_name: ${{ steps.package-version.outputs.current-version }}
+        release_name: ${{ steps.package-version.outputs.current-version }}
         body: |
           SHA256: ${{ steps.create_build.outputs.build_hash }}
         draft: false
         prerelease: false
     - name: Upload Release Asset
       id: upload-release-asset 
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v0.1.14
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{ steps.create_versioned_release.outputs.upload_url }} 
-        asset_path: ../${{ github.event.repository.name }}-${{ steps.package-version.outputs.current-version}}.tgz
-        asset_name: ${{ github.event.repository.name }}-${{ steps.package-version.outputs.current-version}}.tgz
-        asset_content_type: application/gzip
+        tag_name: ${{ steps.package-version.outputs.current-version }}
+        files: | 
+          *.js
+          *.json
+          .gitignore
+          LICENSE
+          README.md
+          .prettierrc
+  
