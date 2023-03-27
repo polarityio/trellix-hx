@@ -1,7 +1,7 @@
 {
-  "main": "./integration.js",
   "name": "FireEyeHX",
-  "version": "3.0.2-beta",
+  "version": "3.0.3-beta",
+  "main": "./integration.js",
   "private": true,
   "license": "MIT",
   "author": "Polarity",
