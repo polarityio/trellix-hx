@@ -1,4 +1,5 @@
 {
+  "polarityIntegrationUuid": "fb64ab60-cce1-11ed-aeee-075d3490155d",
   "name": "FireEye HX",
   "acronym": "FIREHX",
   "description": "Polarity's FireEye HX integration allows querying for Alerts, Associated Hosts, and Policy data using Hashes.",
