@@ -37,7 +37,7 @@ beforeAll(() => {
 });
 
 [502, 504].forEach((statusCode) => {
-  test(`${statusCode} response when calling the FireEye HX API should return a retryable response`, (done) => {
+  test(`${statusCode} response when calling the Trellix HX API should return a retryable response`, (done) => {
     const params = new URLSearchParams({
       md5values: '678668491661fd1b694817cfaf75dde4'
     });
@@ -51,7 +51,7 @@ beforeAll(() => {
       const details = lookupResults[0].data.details;
       console.log(details);
       expect(details.errorMessage).toBe(
-        'A temporary FireEye HX API search limit was reached. You can retry your search by pressing the "Retry Search" button.'
+        'A temporary Trellix HX API search limit was reached. You can retry your search by pressing the "Retry Search" button.'
       );
       expect(details.summaryTag).toBe('Lookup limit reached');
       done();
@@ -59,7 +59,7 @@ beforeAll(() => {
   });
 });
 
-test('ECONNRESET  response when calling the FireEye HX API should return a retryable response', (done) => {
+test('ECONNRESET  response when calling the Trellix HX API should return a retryable response', (done) => {
   const params = new URLSearchParams({
     md5values: '678668491661fd1b694817cfaf75dde4'
   });
@@ -72,7 +72,7 @@ test('ECONNRESET  response when calling the FireEye HX API should return a retry
   doLookup([hash], options, (err, lookupResults) => {
     const details = lookupResults[0].data.details;
     expect(details.errorMessage).toBe(
-      'A temporary FireEye HX API search limit was reached. You can retry your search by pressing the "Retry Search" button.'
+      'A temporary Trellix HX API search limit was reached. You can retry your search by pressing the "Retry Search" button.'
     );
     expect(details.summaryTag).toBe('Lookup limit reached');
     done();

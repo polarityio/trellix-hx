@@ -1,6 +1,6 @@
 {
-  "name": "FireEyeHX",
-  "version": "3.0.5",
+  "name": "TrellixHX",
+  "version": "3.0.6",
   "main": "./integration.js",
   "private": true,
   "license": "MIT",

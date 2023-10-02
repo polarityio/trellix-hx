@@ -28,7 +28,7 @@ const retryablePolarityResponse = (entity) => ({
     details: {
       summaryTag: 'Lookup limit reached',
       errorMessage:
-        'A temporary FireEye HX API search limit was reached. You can retry your search by pressing the "Retry Search" button.'
+        'A temporary Trellix HX API search limit was reached. You can retry your search by pressing the "Retry Search" button.'
     }
   }
 });
