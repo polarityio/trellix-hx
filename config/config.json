@@ -1,8 +1,8 @@
 {
   "polarityIntegrationUuid": "fb64ab60-cce1-11ed-aeee-075d3490155d",
-  "name": "FireEye HX",
-  "acronym": "FIREHX",
-  "description": "Polarity's FireEye HX integration allows querying for Alerts, Associated Hosts, and Policy data using Hashes.",
+  "name": "Trellix HX",
+  "acronym": "THX",
+  "description": "Polarity's Trellix HX integration allows querying for Alerts, Associated Hosts, and Policy data using Hashes.",
   "entityTypes": [
     "hash"
   ],
@@ -31,8 +31,8 @@
   "options": [
     {
       "key": "url",
-      "name": "FireEye HX Instance URL",
-      "description": "The URL of the FireEye HX instance you would like to connect to (including http:// or https://)",
+      "name": "Trellix HX Instance URL",
+      "description": "The URL of the Trellix HX instance you would like to connect to (including http:// or https://)",
       "default": "",
       "type": "text",
       "userCanEdit": false,
@@ -40,8 +40,8 @@
     },
     {
       "key": "apiToken",
-      "name": "FireEye HX API Token",
-      "description": "The API Token associated with the FireEye HX account.",
+      "name": "Trellix HX API Token",
+      "description": "The API Token associated with the Trellix HX account.",
       "default": "",
       "type": "password",
       "userCanEdit": false,

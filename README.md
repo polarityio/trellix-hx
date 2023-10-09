@@ -1,24 +1,24 @@
-# Polarity FireEye HX Integration
+# Polarity Trellix (prev. FireEye) HX Integration
 
 ![image](https://img.shields.io/badge/status-beta-green.svg)
 
-The FireEye Endpoint Security protects your organization with intelligence led protection, detection and response.
+The Trellix Endpoint Security protects your organization with intelligence led protection, detection and response.
 
-Polarity's FireEye HX integration allows querying for Alerts, Associated Hosts, and Policy data using Hashes.
+Polarity's Trellix HX integration allows querying for Alerts, Associated Hosts, and Policy data using Hashes.
 
 <img width="350" alt="Integration Example" src="./assets/alerts.png">
 
-To learn more about FireEye HX, visit the [official website](https://www.fireeye.com/products/endpoint-security.html).
+To learn more about Trellix HX, visit the [official website](https://www.trellix.com/en-us/products/endpoint-security-hx.html).
 
-## FireEye HX Integration Options
+## Trellix HX Integration Options
 
-### FireEye HX Instance URL
+### Trellix HX Instance URL
 
-The URL of the FireEye HX instance you would like to connect to (including http:// or https://)
+The URL of the Trellix HX instance you would like to connect to (including http:// or https://)
 
-### FireEye HX API Token
+### Trellix HX API Token
 
-The API Token associated with the FireEye HX account.
+The API Token associated with the Trellix HX account.
 
 ### Max Concurrent Search Requests
 

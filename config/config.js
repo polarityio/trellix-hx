@@ -1,8 +1,8 @@
 module.exports = {
-  name: 'FireEye HX',
-  acronym: 'FIREHX',
+  name: 'Trellix HX',
+  acronym: 'THX',
   description:
-    "Polarity's FireEye HX integration allows querying for Alerts, Associated Hosts, and Policy data using Hashes.",
+    "Polarity's Trellix HX integration allows querying for Alerts, Associated Hosts, and Policy data using Hashes.",
   entityTypes: ['hash'],
   defaultColor: 'light-purple',
   styles: ['./styles/styles.less'],
@@ -27,9 +27,9 @@ module.exports = {
   options: [
     {
       key: 'url',
-      name: 'FireEye HX Instance URL',
+      name: 'Trellix HX Instance URL',
       description:
-        'The URL of the FireEye HX instance you would like to connect to (including http:// or https://)',
+        'The URL of the Trellix HX instance you would like to connect to (including http:// or https://)',
       default: '',
       type: 'text',
       userCanEdit: false,
@@ -37,8 +37,8 @@ module.exports = {
     },
     {
       key: 'apiToken',
-      name: 'FireEye HX API Token',
-      description: 'The API Token associated with the FireEye HX account.',
+      name: 'Trellix HX API Token',
+      description: 'The API Token associated with the Trellix HX account.',
       default: '',
       type: 'password',
       userCanEdit: false,
