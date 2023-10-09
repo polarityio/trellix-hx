@@ -1,6 +1,6 @@
 {
   "name": "TrellixHX",
-  "version": "3.0.6",
+  "version": "3.0.7",
   "main": "./integration.js",
   "private": true,
   "license": "MIT",
@@ -11,7 +11,7 @@
   "dependencies": {
     "bottleneck": "^2.19.5",
     "lodash": "^4.17.15",
-    "postman-request": "^2.88.1-postman.30"
+    "postman-request": "^2.88.1-postman.33"
   },
   "devDependencies": {
     "jest": "^27.4.7",
