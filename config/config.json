@@ -3,13 +3,9 @@
   "name": "Trellix HX",
   "acronym": "THX",
   "description": "Polarity's Trellix HX integration allows querying for Alerts, Associated Hosts, and Policy data using Hashes.",
-  "entityTypes": [
-    "hash"
-  ],
+  "entityTypes": ["MD5", "SHA1", "SHA256"],
   "defaultColor": "light-purple",
-  "styles": [
-    "./styles/styles.less"
-  ],
+  "styles": ["./styles/styles.less"],
   "block": {
     "component": {
       "file": "./components/block.js"
@@ -17,13 +13,6 @@
     "template": {
       "file": "./templates/block.hbs"
     }
-  },
-  "request": {
-    "cert": "",
-    "key": "",
-    "passphrase": "",
-    "ca": "",
-    "proxy": ""
   },
   "logging": {
     "level": "info"
