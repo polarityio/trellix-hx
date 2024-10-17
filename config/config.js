@@ -3,7 +3,7 @@ module.exports = {
   acronym: 'THX',
   description:
     "Polarity's Trellix HX integration allows querying for Alerts, Associated Hosts, and Policy data using Hashes.",
-  entityTypes: ['hash'],
+  entityTypes: ['MD5', 'SHA1', 'SHA256'],
   defaultColor: 'light-purple',
   styles: ['./styles/styles.less'],
   block: {
@@ -19,7 +19,7 @@ module.exports = {
     key: '',
     passphrase: '',
     ca: '',
-    proxy: ""
+    proxy: ''
   },
   logging: {
     level: 'info' //trace, debug, info, warn, error, fatal
